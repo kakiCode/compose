@@ -22,7 +22,7 @@ services:
     ports:
       - "8086:8086"
     volumes:
-      - /tmp:/var/lib/influxdb
+      - /tmp/influxdb:/var/lib/influxdb
   flume:
     image: kakicode/flume
     container_name: flume
@@ -61,3 +61,16 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=password
     ports:
       - "3000:3000"
+  rservices:
+    image: kakicode/rservices
+    container_name: rservices
+    depends_on: 
+      - kafka
+    links:
+      - "kafka:kafka"
+      - "zookeeper:zookeeper"
+    environment:
+      - TOPIC_IN=tweets-raw
+      - TOPIC_OUT=tweets-processed
+      - ZOOKEEPER=zookeeper
+      - KAFKA=kafka
