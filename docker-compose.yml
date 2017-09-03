@@ -38,9 +38,9 @@ services:
       - TICKERS=TSLA,AMZN
     ports:
       - "6006:6006"
-  streams:
+  streams-tweets:
     image: kakicode/streams
-    container_name: streams
+    container_name: streams-tweets
     depends_on: 
       - kafka
     links:
@@ -49,6 +49,10 @@ services:
     environment:
       - DEBUG_PORT=6008
       - KAFKA_CONFIG=kafka:9092
+      - SOURCE_TOPIC=tweets
+      - SINK_TOPIC=tweets-s
+      - PROCESSOR_CLASS=org.aprestos.labs.data.kafka.streams.processor.topologies.TwitterProcessor
+      - INTERVAL_IN_MILLIS=10000
     ports:
       - "6008:6008"
   grafana:
@@ -72,7 +76,7 @@ services:
       - "kafka:kafka"
       - "zookeeper:zookeeper"
     environment:
-      - TOPIC_IN=points-raw
-      - TOPIC_OUT=points-processed
+      - TOPIC_IN=tickers
+      - TOPIC_OUT=tickers-r
       - ZOOKEEPER=zookeeper
       - KAFKA=kafka
