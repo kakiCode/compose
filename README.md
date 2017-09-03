@@ -1,2 +1,2 @@
 # compose
-docker compose script to run kaki services
+## aggegator project encompassing a docker compose script to run kaki services
