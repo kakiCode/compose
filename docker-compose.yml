@@ -34,6 +34,8 @@ services:
     environment:
       - DEBUG_PORT=6006
       - AGENT_NAME=kaki-agent
+      - KEYWORDS=tesla,amazon
+      - TICKERS=TSLA,AMZN
     ports:
       - "6006:6006"
   streams:
@@ -70,7 +72,7 @@ services:
       - "kafka:kafka"
       - "zookeeper:zookeeper"
     environment:
-      - TOPIC_IN=tweets-raw
-      - TOPIC_OUT=tweets-processed
+      - TOPIC_IN=points-raw
+      - TOPIC_OUT=points-processed
       - ZOOKEEPER=zookeeper
       - KAFKA=kafka
