@@ -34,8 +34,10 @@ services:
     environment:
       - DEBUG_PORT=6006
       - AGENT_NAME=kaki-agent
-      - KEYWORDS=tesla,amazon
-      - TICKERS=TSLA,AMZN
+      - KEYWORDS=tesla,amazon,ibm
+      - TICKERS=TSLA,AMZN,IBM
+      - QUERY_DELAY=60000
+      - DATA_INTERVAL=1min
     ports:
       - "6006:6006"
   streams-tweets:
