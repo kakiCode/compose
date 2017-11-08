@@ -34,8 +34,8 @@ services:
     environment:
       - DEBUG_PORT=6006
       - AGENT_NAME=kaki-agent
-      - KEYWORDS=tesla,amazon,ibm
-      - TICKERS=TSLA,AMZN,IBM
+      - KEYWORDS=tesla,amazon
+      - TICKERS=TSLA,AMZN
       - QUERY_DELAY=60000
       - DATA_INTERVAL=1min
     ports:
@@ -82,3 +82,4 @@ services:
       - TOPIC_OUT=tickers-r
       - ZOOKEEPER=zookeeper
       - KAFKA=kafka
+      - STRATEGY=analysisOne
