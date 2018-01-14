@@ -1,7 +1,6 @@
 # compose
 ## aggegator project encompassing a docker compose script to run kaki services
 
-# kafka
 ### services running now:
 - zookeeper (single)
 - kafka (single)
