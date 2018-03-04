@@ -16,13 +16,52 @@ services:
       - "zookeeper:zookeeper"
     ports:
       - "9092:9092"
-#  influxdb:
-#    image: kakicode/influxdb
-#    container_name: influxdb
-#    ports:
-#      - "8086:8086"
-#    volumes:
-#      - /tmp/influxdb:/var/lib/influxdb
+  src-percent:
+    image: caquicode/src-percent
+    container_name: src-percent
+    depends_on:
+      - kafka
+    links:
+      - "kafka:kafka"
+      - "zookeeper:zookeeper"
+    environment:
+      - DEBUG_PORT=6006
+      - DELAY_IN_MILLIS=5000
+      - MEASUREMENT=percent
+    ports:
+      - "6006:6006"
+  influxdb:
+    image: caquicode/influxdb
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+    volumes:
+      - /tmp/influxdb:/var/lib/influxdb
+  collector:
+    image: caquicode/collector
+    container_name: collector
+    depends_on: 
+      - kafka
+      - influxdb
+    links:
+      - "zookeeper:zookeeper"
+      - "influxdb:influxdb"
+    environment:
+      - DEBUG_PORT=6007
+    ports:
+      - "6007:6007"
+  grafana:
+    image: caquicode/grafana
+    container_name: grafana
+    depends_on: 
+      - influxdb
+    links:
+      - "influxdb:influxdb"
+    environment:
+      - GF_SECURITY_ADMIN_USER=root
+      - GF_SECURITY_ADMIN_PASSWORD=password
+    ports:
+      - "3000:3000"
 #  flume:
 #    image: kakicode/flume
 #    container_name: flume
